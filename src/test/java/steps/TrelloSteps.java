@@ -1,17 +1,19 @@
 package steps;
 
-import Controllers.RequestController;
-import Controllers.TrelloController;
-import Utils.RequestUtil;
+import controllers.RequestController;
+import controllers.TrelloController;
+import org.testng.Assert;
+import utils.RequestUtil;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
+import static enums.Types.*;
 
 
-public class TrelloSteps extends BaseSteps{
+public class TrelloSteps{
     private RequestController requestController;
     private TrelloController trelloController;
     private RequestUtil requestUtil;
@@ -41,9 +43,7 @@ public class TrelloSteps extends BaseSteps{
     @Step("The Pokemon API will return the correct information about the Pokemon")
     @Then("The Pokemon API will return the correct information about the Pokemon")
     public TrelloSteps thePokemonAPIWillReturnTheCorrectInformationAboutThePokemon() {
-        softly.assertThat(response.getBody().path("name").toString())
-                .isEqualTo(pokemonName);
-        LOGGER.info("The actual name is: "+response.getBody().path("name").toString());
+        Assert.assertEquals(response.getBody().path("name").toString(), pokemonName);
         return this;
     }
 
@@ -51,9 +51,7 @@ public class TrelloSteps extends BaseSteps{
     @Step("The Pokemon API will return the correct information about the Pokemon")
     @Then("The Pokemon API will return the correct information about the Pokemon")
     public TrelloSteps thePokemonAPIWillReturnTheInCorrectInformationAboutThePokemon() {
-        softly.assertThat(response.getBody().path("name").toString())
-                .isEqualTo(pokemonName+"no");
-        LOGGER.info("The actual name is: "+response.getBody().path("name").toString());
+        Assert.assertEquals(response.getBody().path("name").toString(),pokemonName+"no");
         return this;
     }
 
@@ -67,18 +65,16 @@ public class TrelloSteps extends BaseSteps{
     @Step("The user creates a board called {string} on Trello")
     @When("The user creates a board called {string} on Trello")
     public TrelloSteps theUserCreatesABoardOnTrello(String boardName)  {
-        response = requestController.postRequest(requestUtil.createBoard(), trelloController.getParameters("Create a board", boardName));
-        softly.assertThat(response.getBody().path("name").toString())
-                .isEqualTo(boardName);
+        response = requestController.postRequest(requestUtil.createBoard(), trelloController.getParameters(BOARD, boardName));
+        Assert.assertEquals(response.getBody().path("name").toString(), boardName);
         trelloController.createBoard(response);
         return this;
     }
     @Step("The user creates a list named {string} on the created board")
     @And("The user creates a list named {string} on the created board")
     public TrelloSteps theUserCreatesAListNamedOnTheCreatedBoard(String listName)  {
-        response = requestController.postRequest(requestUtil.createList(), trelloController.getParameters("Add list to a board", listName));
-        softly.assertThat(response.getBody().path("name").toString())
-                .isEqualTo(listName);
+        response = requestController.postRequest(requestUtil.createList(), trelloController.getParameters(LIST, listName));
+        Assert.assertEquals(response.getBody().path("name").toString(), listName);
         trelloController.associateListToABoard(response);
         return this;
     }
@@ -86,9 +82,8 @@ public class TrelloSteps extends BaseSteps{
     @Step("The user add a Pokemon called {string} to the list")
     @And("The user add a Pokemon called {string} to the list")
     public TrelloSteps theUserAddAPokemonCalledToTheList(String pokemonName)  {
-        response = requestController.postRequest(requestUtil.createCard(), trelloController.getParameters("Add a card to a list", pokemonName));
-        softly.assertThat(response.getBody().path("name").toString())
-                .isEqualTo(pokemonName);
+        response = requestController.postRequest(requestUtil.createCard(), trelloController.getParameters(CARD, pokemonName));
+        Assert.assertEquals(response.getBody().path("name").toString(), pokemonName);
         trelloController.associateCardToAList(response);
         return this;
     }
@@ -96,9 +91,8 @@ public class TrelloSteps extends BaseSteps{
     @Step("The user can see on his list his favorite Pokemon {string}")
     @Then("The user can see on his list his favorite Pokemon {string}")
     public TrelloSteps theUserCanSeeOnHisListHisFavoritePokemon(String pokemonName)  {
-        response = requestController.getRequest(requestUtil.getCardsOfABoard(trelloController.getBoardId()),trelloController.getParameters("Consult Pokemons", "name"));
-        softly.assertThat(response.getBody().asString())
-                .contains(pokemonName);
+        response = requestController.getRequest(requestUtil.getCardsOfABoard(trelloController.getBoardId()),trelloController.getParameters(POKEMON, "name"));
+        Assert.assertTrue(response.getBody().asString().contains(pokemonName));
         return this;
     }
 }

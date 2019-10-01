@@ -5,6 +5,7 @@ On this workshop we are going to test the integration of two popular API's, Trel
 For the workshop we need to have installed those tools and have access to this API's:
 
 * [Java]
+* [Java JDK]
 * [Maven]
 * [Trello]
 * [Trello Key]
@@ -307,8 +308,7 @@ Your Web Browser will deploy a new window with the Allure report
 
 
 
-
-
+   [Java JDK]: <http://openjdk.java.net/install/>
    [Cucumber Plugin]: <http://letzdotesting.com/install-cucumber-plugin-for-intellij/>
    [Gherkin]: <https://cucumber.io/docs/gherkin/reference/>
    [Cucumber]: <https://cucumber.io/docs/installation/>

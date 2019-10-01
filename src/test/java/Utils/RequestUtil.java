@@ -1,10 +1,9 @@
-package Utils;
+package utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class RequestUtil {
-
 
     private PropertiesReader propertiesReader;
 
@@ -12,13 +11,8 @@ public class RequestUtil {
         this.propertiesReader = new PropertiesReader();
     }
 
-
     public  URL getPokemonURL(String pokemon) {
         return createURL(propertiesReader.getGetPokemonUrl()+pokemon);
-    }
-
-    public  URL getBoardsList() {
-        return createURL(propertiesReader.getGetBoardsList());
     }
 
     public  URL createBoard() {

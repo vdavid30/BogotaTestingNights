@@ -1,8 +1,11 @@
-package Model;
+package model;
+
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class Board {
+    private Logger LOGGER = Logger.getLogger(this.getClass());
     private String id;
     private String name;
     private ArrayList<String> listsId;
@@ -13,6 +16,8 @@ public class Board {
         this.name= name;
         this.listsId = new ArrayList<>();
         this.cards = new ArrayList<>();
+        LOGGER.info("Board created with name: "+ this.name);
+        LOGGER.info("Board created with id: "+this.id);
     }
 
 
@@ -37,6 +42,8 @@ public class Board {
     }
     public void addCard(String cardName, String cardId){
         this.cards.add(new Card(cardName, cardId));
+        LOGGER.info("Card added with card name: "+cardName);
+        LOGGER.info("Card added with card id: "+cardId);
     }
 
     public String getId() {
@@ -53,8 +60,8 @@ public class Board {
 
     public void addList(String listId){
         this.listsId.add(listId);
+        LOGGER.info("List added with the Id : "+listId);
     }
-
 
     public String getLastListId(){
         return this.listsId.get(listsId.size()-1);

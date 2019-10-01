@@ -1,45 +1,43 @@
-package Controllers;
+package controllers;
 
-import Model.Board;
-import Utils.PropertiesReader;
+import enums.Types;
+import model.Board;
+import utils.PropertiesReader;
 import io.restassured.response.Response;
 import java.util.HashMap;
 
 public class TrelloController {
 
-    private RequestController requestController;
     private HashMap<String, String> parameters;
     private PropertiesReader propertiesReader;
     private Board board;
 
     public TrelloController(){
         this.parameters = new HashMap<>();
-        this.requestController = new RequestController();
         this.propertiesReader = new PropertiesReader();
     }
 
-    public HashMap<String,String> getAuthParameters() {
+    private void getAuthParameters() {
         this.parameters.clear();
         this.parameters.put("key", propertiesReader.getKey());
         this.parameters.put("token", propertiesReader.getToken());
-        return parameters;
     }
 
-    public HashMap<String,String> getParameters(String typeOfRequest, String name){
+    public HashMap<String,String> getParameters(Types type, String name){
         getAuthParameters();
-        switch(typeOfRequest){
-            case "Create a board":
+        switch(type){
+            case BOARD:
                 this.parameters.put("name", name);
                 break;
-            case "Add list to a board":
+            case LIST:
                 this.parameters.put("name", name);
                 this.parameters.put("idBoard", board.getId());
                 break;
-            case "Add a card to a list":
+            case CARD:
                 this.parameters.put("idList", board.getLastListId());
                 this.parameters.put("name", name);
                 break;
-            case "Consult Pokemons":
+            case POKEMON:
                 this.parameters.put("fields", name);
                 break;
         }
@@ -47,7 +45,7 @@ public class TrelloController {
     }
 
     public void createBoard(Response response){
-        this.board = requestController.generateBoard(response);
+        this.board =  new Board(response.getBody().path("id").toString(), response.getBody().path("name").toString());
     }
 
     public void associateListToABoard(Response response){

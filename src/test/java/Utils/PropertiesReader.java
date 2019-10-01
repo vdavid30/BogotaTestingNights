@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import org.apache.log4j.Logger;
 
@@ -10,8 +10,6 @@ import java.util.Properties;
 public class PropertiesReader {
     private Logger LOGGER = Logger.getLogger(this.getClass());
     private Properties properties;
-
-
 
     public PropertiesReader(){
         properties = new Properties();
@@ -38,10 +36,6 @@ public class PropertiesReader {
     }
 
     public String getGetPokemonUrl(){ return properties.getProperty("GET_POKEMON_URL"); }
-
-    public String getGetBoardsList(){
-        return properties.getProperty("GET_BOARDS_LIST");
-    }
 
     public String getCreateBoard (){
         return properties.getProperty("CREATE_BOARD");

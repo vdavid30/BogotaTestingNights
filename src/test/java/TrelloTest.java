@@ -17,8 +17,7 @@ public class TrelloTest extends BaseTest {
         trelloSteps.get()
                 .theUserWantsToConsultInformationOnThePokemonAPI("eevee")
                 .theUserRequestThePokemonInformationToThePokemonAPI()
-                .thePokemonAPIWillReturnTheCorrectInformationAboutThePokemon()
-                .verifyAll();
+                .thePokemonAPIWillReturnTheCorrectInformationAboutThePokemon();
     }
 
     @Story("Get the Pokemon information from API with invalid conditions")
@@ -29,8 +28,7 @@ public class TrelloTest extends BaseTest {
         trelloSteps.get()
                 .theUserWantsToConsultInformationOnThePokemonAPI("eevee")
                 .theUserRequestThePokemonInformationToThePokemonAPI()
-                .thePokemonAPIWillReturnTheInCorrectInformationAboutThePokemon()
-                .verifyAll();
+                .thePokemonAPIWillReturnTheInCorrectInformationAboutThePokemon();
     }
 
 
@@ -44,7 +42,6 @@ public class TrelloTest extends BaseTest {
                 .theUserCreatesABoardOnTrello("Pokemon Information")
                 .theUserCreatesAListNamedOnTheCreatedBoard("Pokemon Fight Team")
                 .theUserAddAPokemonCalledToTheList("eevee")
-                .theUserCanSeeOnHisListHisFavoritePokemon("eevee")
-                .verifyAll();
+                .theUserCanSeeOnHisListHisFavoritePokemon("eevee");
     }
 }
